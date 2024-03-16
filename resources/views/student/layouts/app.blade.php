@@ -27,7 +27,7 @@
 
             @include('student.layouts.footer')
 
-            @include('student.register-form')
+            @include('student.register-member.register-form')
         </div>
     </div>
     <script src="{{ asset('vendors/jquery/jquery.min.js') }}"></script>

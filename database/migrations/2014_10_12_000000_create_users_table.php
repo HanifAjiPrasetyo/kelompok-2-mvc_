@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('nim')->unique();
-            $table->string('jurusan');
-            $table->text('alamat');
+            $table->string('jurusan')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('email')->unique();
             $table->boolean('is_admin')->default(false)->nullable();
             $table->timestamp('email_verified_at')->nullable();

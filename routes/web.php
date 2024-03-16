@@ -27,5 +27,5 @@ Route::middleware('admin')->prefix('dashboard')->group(function () {
 });
 
 Route::get('/book', function () {
-    return view('student.book');
+    return view('student.book.index');
 })->name('book');

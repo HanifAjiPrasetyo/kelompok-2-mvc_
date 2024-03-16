@@ -3,7 +3,7 @@
         <div class="col-12 col-md-6 col-lg-3 grid-margin">
             <img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid pb-2" width="100">
             <div class="pt-2">
-                <p class="text-muted m-0">my@email.com</p>
+                <p class="text-muted m-0">our@email.com</p>
                 <p class="text-muted m-0">123-456-789</p>
             </div>
         </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="col-12 col-md-6 col-lg-3 grid-margin">
             <h5 class="pb-2">Our address</h5>
-            <p class="text-muted">123 My Address<br>My. Street</p>
+            <p class="text-muted">123 Our Address<br>Our. Street</p>
             <div class="d-flex justify-content-center justify-content-md-start">
                 <a href="#"><span class="mdi mdi-facebook"></span></a>
                 <a href="#"><span class="mdi mdi-twitter"></span></a>
