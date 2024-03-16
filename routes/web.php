@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::middleware('admin')->prefix('dashboard')->group(function () {
 Route::get('/book', function () {
     return view('student.book.index');
 })->name('book');
+
+Route::resource('/member', MemberController::class);
