@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
 
 /*
@@ -23,12 +22,11 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
+Route::get('/book', [BookController::class, 'home'])->name('book.home');
+
+Route::resource('/member', MemberController::class)->middleware('auth');
+
 Route::middleware('admin')->prefix('dashboard')->group(function () {
     Route::get('/', fn () => view('admin.index'))->name('dashboard.index');
+    Route::resource('/book', BookController::class);
 });
-
-Route::get('/book', function () {
-    return view('student.book.index');
-})->name('book');
-
-Route::resource('/member', MemberController::class);
