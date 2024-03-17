@@ -1,18 +1,18 @@
-@extends('dashboard.layouts.main')
+@extends('admin.layouts.main')
 
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Edit Post</h1>
+        <h1 class="h2">Ubah Data Buku</h1>
     </div>
 
     <div class="col-lg-8">
-        <form action="/dashboard/posts/{{ $post->slug }}" method="post" enctype="multipart/form-data">
-            @method('PUT')
+        <form action="/dashboard/book/{{ $book->id }}" method="post">
             @csrf
+            @method('put')
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                    autofocus value="{{ old('title', $post->title) }}">
+                <label for="judul" class="form-label">Judul</label>
+                <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul" name="judul"
+                    autofocus value="{{ old('judul', $book->judul) }}">
                 @error('title')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -20,81 +20,46 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="slug" class="form-label">Slug</label>
-                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
-                    readonly value="{{ old('slug', $post->slug) }}">
-                @error('slug')
+                <label for="penulis" class="form-label">Penulis</label>
+                <input type="text" class="form-control @error('penulis') is-invalid @enderror" id="penulis"
+                    name="penulis" value="{{ old('penulis', $book->penulis) }}">
+                @error('penulis')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="category" class="form-label">Category</label>
-                <select class="form-select" id="category" name="category_id">
-                    @foreach ($categories as $c)
-                        @if (old('category_id', $post->category_id) == $c->id)
-                            <option value="{{ $c->id }}" selected>{{ $c->name }}</option>
-                        @else
-                            <option value="{{ $c->id }}">{{ $c->name }}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">Post Image</label>
-                <input type="hidden" name="oldImg" value="{{ $post->image }}">
-                @if ($post->image)
-                    <img src="{{ asset('storage/' . $post->image) }}" class="img-preview img-fluid col-sm-5 mb-3 d-block">
-                @else
-                    <img class="img-preview img-fluid col-sm-5 mb-3">
-                @endif
-                <input class="form-control @error('image') is-invalid @enderror" type="file" id="image"
-                    name="image" onchange="previewImage()">
-                @error('image')
+                <label for="penerbit" class="form-label">Penerbit</label>
+                <input type="text" class="form-control @error('penerbit') is-invalid @enderror" id="penerbit"
+                    name="penerbit" value="{{ old('penerbit', $book->penerbit) }}">
+                @error('penulis')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="body" class="form-label">Body</label>
-                @error('body')
-                    <p class="text-danger">{{ $message }}</p>
+                <label for="tahun_terbit" class="form-label">Tahun terbit</label>
+                <input type="number" class="form-control @error('tahun_terbit') is-invalid @enderror" id="tahun_terbit"
+                    name="tahun_terbit" value="{{ old('tahun_terbit', $book->tahun_terbit) }}">
+                @error('penulis')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
-                <input id="body" type="hidden" name="body" value="{{ old('body', $post->body) }}">
-                <trix-editor input="body"></trix-editor>
             </div>
-            <button type="submit" class="btn btn-primary">Update Post</button>
+            <div class="mb-3">
+                <label for="stok" class="form-label">Stok</label>
+                <input type="number" class="form-control @error('stok') is-invalid @enderror" id="stok" name="stok"
+                    value="{{ old('stok', $book->stok) }}">
+                @error('penulis')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary">Update Data</button>
         </form>
     </div>
-
-    <script>
-        const title = document.querySelector('#title');
-        const slug = document.querySelector('#slug');
-
-        title.addEventListener('change', function() {
-            fetch('/dashboard/posts/checkSlug?title=' + title.value)
-                .then(response => response.json())
-                .then(data => slug.value = data.slug)
-        });
-
-        document.addEventListener('trix-file-accept', function(e) {
-            e.preventDefault();
-        })
-
-        function previewImage() {
-            const image = document.querySelector('#image');
-            const imgPreview = document.querySelector('.img-preview');
-
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
-        }
-    </script>
 @endsection

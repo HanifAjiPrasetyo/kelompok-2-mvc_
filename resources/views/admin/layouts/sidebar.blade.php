@@ -14,7 +14,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/buku*') ? 'active' : '' }}" href="">
+                <a class="nav-link {{ Request::is('dashboard/buku*') ? 'active' : '' }}"
+                    href="{{ route('book.index') }}">
                     <span data-feather="file-text" class="text-dark"></span>
                     Buku
                 </a>
