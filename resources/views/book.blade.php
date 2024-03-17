@@ -20,6 +20,7 @@
                     $bookVar = ['coding-book', 'it-book', 'programming-book'][
                         array_rand(['coding-book', 'it-book', 'programming-book'])
                     ];
+                    $modalId = 'borrowModal-' . $item->id;
                 @endphp
                 <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0" data-aos="zoom-in"
                     data-aos-delay="{{ $aosDelay }}">
@@ -34,7 +35,7 @@
                                     <div>
                                         <h6 class="text-white pb-2 px-3">{{ $item->judul }}</h6>
                                         <button class="btn btn-success" data-toggle="modal"
-                                            data-target="#borrowModal">Pinjam</button>
+                                            data-target="#{{ $modalId }}">Pinjam</button>
                                     </div>
                                 </div>
                             </div>
@@ -46,53 +47,80 @@
                     </div>
                 </div>
                 @auth
-                    <div class="modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                    <div class="modal fade" id="{{ $modalId }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header mb-2">
                                     <h4 class="modal-title" id="modalLabel">Form Pinjam Buku</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/" method="POST">
+                                    <form action="{{ route('borrow.store') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
                                         <input type="hidden" name="book_id" id="book_id" value="{{ $item->id }}">
-                                        <div class="form-group mb-1">
-                                            <label for="header-member" class="h5 text-muted">Data member</label>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="header-member" class="h5 text-muted">Data Member</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nama">Nama</label>
+                                                    <input type="text" class="form-control" id="nama" name="nama"
+                                                        value="{{ auth()->user()->name }}" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nim">NIM</label>
+                                                    <input type="text" class="form-control" id="nim" name="nim"
+                                                        value="{{ auth()->user()->nim }}" readonly>
+                                                </div>
+                                                @if (!is_null($member))
+                                                    <div class="form-group">
+                                                        <label for="member_id">ID Member</label>
+                                                        <input type="text" class="form-control" id="member_id"
+                                                            name="member_id" value="{{ $member->id }}" readonly>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="header-book" class="h5 text-muted">Data Buku</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="judul">Judul</label>
+                                                    <input type="text" class="form-control" id="judul"
+                                                        value="{{ $item->judul }}" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="penulis">Penulis</label>
+                                                    <input type="text" class="form-control" id="penulis"
+                                                        value="{{ $item->penulis }}" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tahun_terbit">Tahun terbit</label>
+                                                    <input type="text" class="form-control" id="tahun_terbit"
+                                                        value="{{ $item->tahun_terbit }}" readonly>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama" name="nama"
-                                                value="{{ auth()->user()->name }}" readonly>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label for="nim">NIM</label>
-                                            <input type="text" class="form-control" id="nim" name="nim"
-                                                value="{{ auth()->user()->nim }}" readonly>
-                                        </div>
-                                        <div class="form-group mb-1">
-                                            <label for="header-book" class="h5 text-muted">Data buku</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="judul">Judul</label>
-                                            <input type="text" class="form-control" id="judul"
-                                                value="{{ $item->judul }}" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="penulis">Penulis</label>
-                                            <input type="text" class="form-control" id="penulis"
-                                                value="{{ $item->penulis }}" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="tahun_terbit">Tahun terbit</label>
-                                            <input type="text" class="form-control" id="tahun_terbit"
-                                                value="{{ $item->tahun_terbit }}" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="jumlah">Jumlah buku</label>
-                                            <input type="number" class="form-control" id="jumlah" name="jumlah" required
-                                                autofocus>
+
+                                        <div class="row mt-3">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="jumlah">Jumlah buku</label>
+                                                    <input type="number" class="form-control" id="jumlah" name="jumlah"
+                                                        autofocus>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tgl_pinjam">Tanggal pinjam</label>
+                                                    <input type="date" class="form-control" id="tgl_pinjam"
+                                                        name="tgl_pinjam">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tgl_kembali">Tanggal kembali</label>
+                                                    <input type="date" class="form-control" id="tgl_kembali"
+                                                        name="tgl_kembali" autofocus>
+                                                </div>
+                                            </div>
                                         </div>
                                 </div>
                                 <div class="modal-footer">

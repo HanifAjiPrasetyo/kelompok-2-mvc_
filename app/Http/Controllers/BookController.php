@@ -22,9 +22,10 @@ class BookController extends Controller
     public function home()
     {
         $books = Book::all();
+
         $member = Member::where('user_id', auth()->user()->id)->first();
 
-        return view('book', compact('books'));
+        return view('book', compact('books', 'member'));
     }
 
     /**

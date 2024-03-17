@@ -12,4 +12,9 @@ class Book extends Model
     protected $table = 'books';
 
     protected $guarded = ['id'];
+
+    public function borrows()
+    {
+        return $this->hasMany(Borrow::class, 'book_id');
+    }
 }
