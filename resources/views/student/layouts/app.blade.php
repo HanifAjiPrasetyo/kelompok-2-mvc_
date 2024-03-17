@@ -35,6 +35,7 @@
     <script src="{{ asset('vendors/owl-carousel/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('vendors/aos/js/aos.js') }}"></script>
     <script src="{{ asset('js/landingpage.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>

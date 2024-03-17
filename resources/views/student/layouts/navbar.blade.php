@@ -35,9 +35,10 @@
                     @endguest
 
                     @auth
-                        @if (!auth()->user()->is_admin)
+                        @if (!auth()->user()->is_admin && !auth()->user()->member)
                             <button class="btn btn-info mx-1" data-toggle="modal" data-target="#formModal">Register
-                                Member</button>
+                                Member
+                            </button>
                         @endif
                         @if (auth()->user()->is_admin)
                             <a href="{{ route('dashboard.index') }}" class="btn btn-dark mx-1">Dashboard</a>
@@ -49,6 +50,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('borrow.list') }}">Daftar Pinjam</a>
+                                <a class="dropdown-item" href="{{ route('return-book.list') }}">Daftar Pengembalian</a>
                             </div>
                         </div>
                         <a class="btn btn-danger ml-3" href="{{ route('logout') }}"
