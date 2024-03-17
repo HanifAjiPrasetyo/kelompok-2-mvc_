@@ -16,7 +16,7 @@ class isStudent
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check() || auth()->user()->is_admin) {
-            abort(403, 'You are not student 🚫');
+            abort(403, 'Anda bukan mahasiswa 🚫');
         }
         return $next($request);
     }

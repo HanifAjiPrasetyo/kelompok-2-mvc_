@@ -1,4 +1,4 @@
-<section class="contact-details mt-5 mb-0" id="contact-details-section">
+<section class="contact-details" id="contact-details-section" style="margin-top: 200px !important;">
     <div class="row text-center text-md-left justify-content-center">
         <div class="col-12 col-md-6 col-lg-3 grid-margin">
             <img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid pb-2" width="100">
