@@ -48,7 +48,7 @@ class BorrowController extends Controller
             'stok' => $book->stok - $request->jumlah
         ]);
 
-        return redirect('/')->with('success', 'Buku berhasil dipinjam');
+        return redirect('/member/borrow/list')->with('success', 'Buku berhasil dipinjam');
     }
 
     /**
